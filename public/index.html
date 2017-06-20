@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" manifest="badgescanner.appcache">
+  <head>
+    <title>badgescanner 0.0.2</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/picnic.css">
+    <link rel="stylesheet" href="css/badgescanner.css">
+  </head>
+
+  <body>
+    <nav class="demo">
+      <a href="/" class="brand">
+        <img class="logo" src="/img/logo.png" />
+        <span>badgescanner 0.0.2</span>
+      </a>
+
+      <div class="menu">
+        <label for="modal_1" class="button">Settings</label>
+      </div>
+    </nav>
+    
+    <div>
+      <video id="v" autoplay></video>
+    </div>
+    <div id="extras"></div>
+    <div id="thetable"></div>    
+    
+    
+
+    <div class="modal">
+      <input id="modal_1" type="checkbox" />
+      <label for="modal_1" class="overlay"></label>
+      <article>
+        <header>
+          <h3>Replication</h3>
+          <label for="modal_1" class="close">&times;</label>
+        </header>
+        <section class="content">
+          <div>Save your data to a remote Apache CouchDB or IBM Cloudant database. Simply enter the URL of your instance in the box below and tap the "Replicate" button.</div>
+          <div class="eg"> e.g. https://mycouchdb.instance.com/mydatabase</div>
+          <div class="eg"> e.g. https://myusername:mypassword@myaccount.cloudant.com/mydatabase</div>
+           
+          
+          <label for"url">Remote URL</label>
+          <input id="url" type="url">
+          <button class="warning" onclick="replicate()">Replicate</button>
+          <div id="replicationstatus"></div>
+          <hr />
+          <h3>Delete all contacts</h3>
+          <button class="button error" onclick="deleteData()">! Delete Data !</button>
+          <hr />
+        </section>
+        <footer>
+          <label for="modal_1" class="button">
+            Close
+          </label>
+        </footer>
+      </article>
+    </div>
+    
+    <div class="modal">
+      <input id="modal_2" type="checkbox" />
+      <label for="modal_2" class="overlay"></label>
+      <article>
+        <header>
+          <h3>Notes</h3>
+          <label for="modal_2" class="close">&times;</label>
+        </header>
+        <section class="content">
+          <input id="noteid" type="hidden" />
+          <input id="noterev" type="hidden" />
+          <textarea id="notetxt"></textarea>
+
+          <hr />
+        </section>
+        <footer>
+          <label for="modal_2" class="button">
+            Close
+          </label>
+          <label for="modal_2" class="button error" onclick="saveNote()">Save</label>
+        </footer>
+      </article>
+    </div>
+    
+
+    
+    <canvas id="qr-canvas" width="500px" height="500px"></canvas>
+
+    <script type="text/javascript" src="js/zepto.js"></script>
+    <script type="text/javascript" src="js/qrcode.js"></script>
+    <!-- http://jsfiddle.net/ARTsinn/P2t2P/ -->
+    <script type="text/javascript" src="js/vcard.js"></script>
+    <!-- http://pouchdb.com -->
+    <script type="text/javascript" src="js/pouchdb-5.3.1.min.js"></script>
+    <script type="text/javascript" src="js/badgescanner.js"></script>
+
+    <audio id="beep">
+      <source src="/sound/beep.mp3" type="audio/mpeg">
+    </audio>
+  </body>
+</html>

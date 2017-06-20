@@ -1,0 +1,31 @@
+#v {
+ width:500px;
+ height:500px; 
+}
+
+#qr-canvas {
+  display: none;
+}
+
+#result {
+  display:none;
+}
+
+.eg {
+  color:#999;
+  margin-top:5px;
+  margin-bottom:10px;
+  
+}
+
+.inthemiddle {
+  width:80%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+#notetxt {
+  width:400px;
+}
