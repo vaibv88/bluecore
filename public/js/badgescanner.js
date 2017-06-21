@@ -17,7 +17,17 @@ var success = function(stream) {
   v.src = window.URL.createObjectURL(stream);
   gUM=true;
 };
-	
+
+
+function myFunction(){
+  var v1 = document.getElementById("v1");
+  v1.src = "../media/1.mp4";
+//document.getElementById("1.mp4").src="../media/1.mp4";
+//document.getElementById("v1").load();
+}
+
+
+
 var error = function(e) {
   gUM=false;
   return;
@@ -28,7 +38,7 @@ var captureToCanvas = function() {
     try {
       document.getElementById("qr-canvas").getContext("2d").drawImage(v,0,0);
       qrcode.decode();
-    } catch(e) {       
+    } catch(e) {
     };
   }
 };
@@ -57,7 +67,7 @@ var createDatabase = function(callback) {
          if (typeof doc.ts != "number") {
            doc.ts = 0;
          }
-         emit(doc.ts,null);      
+         emit(doc.ts,null);
        }.toString()
      }
    }
@@ -70,11 +80,28 @@ var createDatabase = function(callback) {
  });
 }
 
+/*db.query("query/byts", {descending:true, include_docs:true} ).then(function (result) {
+  for(var i in result.rows) {
+    var d = result.rows[i].doc;
+    if (d) {
+
+      var data = d.url;
+
+var play = function(data){
+
+  var v1 = document.getElementById("v1");
+  v1.src = "data";
+
+}
+}
+
+}*/
+
 
 var renderTable = function() {
   var fn = function(doc) {
     if (typeof doc.ts == "number") {
-      emit(doc.ts,null);      
+      emit(doc.ts,null);
     }
   };
   db.query("query/byts", {descending:true, include_docs:true} ).then(function (result) {
@@ -100,16 +127,27 @@ var renderTable = function() {
           html += '<td>' + d.tel + '</td>';
           html += '<td>' + d.email + '</td>';
           html += '<td>' + d.url + '</td>';
+        //  var data = d.url;
+          //document.getElementById("v1").src= "data";
+          //document.getElementById(v.src=../media/1.mp4)
+          //document.getElementById("v1").src="../media/1.mp4";
           html += '<td><label for="modal_2" class="button notebutton" data-id="' + d._id + '" data-rev="' + d._rev + '">Note</label></td>';
           html += '</tr>';
+          //function myFunction(data){
+            //var v1 = document.getElementById("v1");
+            //v1.src = "data";
+          //document.getElementById("1.mp4").src="../media/1.mp4";
+          //document.getElementById("v1").load();
+          //}
         }
-      }    
+      }
       html += '</tbody></table>';
     } else {
       html = "";
     }
     document.getElementById("thetable").innerHTML=html;
-    
+
+
     $('.notebutton').bind("click", function(event) {
       var b = $( this );
       var id = b.attr("data-id");
@@ -123,11 +161,11 @@ var renderTable = function() {
         }
       });
     });
-    
+
     // handle result
   }).catch(function (err) {
     console.log("query error",err);
-  });  
+  });
 };
 
 var saveNote = function() {
@@ -147,13 +185,13 @@ var replicate = function() {
   if(url) {
     var remoteDB = new PouchDB(url);
     db.replicate.to(remoteDB)
-      .on("change", function(info) { 
-        document.getElementById("replicationstatus").innerHTML = "IN PROGRESS - " + info.docs_written; 
+      .on("change", function(info) {
+        document.getElementById("replicationstatus").innerHTML = "IN PROGRESS - " + info.docs_written;
       })
-      .on("complete", function(info) { 
+      .on("complete", function(info) {
         document.getElementById("replicationstatus").innerHTML = "COMPLETE - " + info.docs_written;
       })
-      .on("error",  function(err) { 
+      .on("error",  function(err) {
         document.getElementById("replicationstatus").innerHTML = "ERROR - " + JSON.strinfify(err);
       });
   }
@@ -162,44 +200,44 @@ var replicate = function() {
 // called when a qrcode is detected
 qrcode.callback = function(data) {
   console.log(data);
-  
+
   // create vcard object
   var vcard = vcardParse(data);
-  if (!vcard) { 
+  if (!vcard) {
     // if we got here, then "data" isn't a vcard
     if (lastvcard && lastvcard == data) {
       console.log("rejected - we just had that one", data);
-      return;      
+      return;
     }
     vcard = { url: data};
     lastvcard = data;
-  } else {    
+  } else {
     if (lastvcard && vcard.fn == lastvcard.fn) {
       console.log("rejected - we just had that one", vcard.fn);
       return;
     }
     vcard.tel = simplify(vcard.tel);
     vcard.email = simplify(vcard.email);
-    vcard.adr = simplify(vcard.adr);  
+    vcard.adr = simplify(vcard.adr);
     lastvcard = vcard;
   }
-  
+
   // add timestampss
   var d = new Date();
   vcard.ts = d.getTime();
   vcard.date = d.toISOString();
   console.log("accepted", JSON.stringify(vcard));
-   
+
   // play audio
-  var myAudio = document.getElementById("beep"); 
+  var myAudio = document.getElementById("beep");
   myAudio.play();
-     
+
   // saved to database
   db.post(vcard).then(function (response) {
-    
+
     // update UI
     renderTable();
-    
+
   }).catch(function (err) {
     console.log(err);
   });
@@ -217,8 +255,8 @@ var deleteData = function() {
 window.addEventListener("DOMContentLoaded", function() {
 
   // create database and design docs
-  createDatabase(function() { 
-    
+  createDatabase(function() {
+
     // clear canvas
     initCanvas(500,500);
 

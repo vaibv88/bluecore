@@ -1,8 +1,12 @@
 #v {
  width:500px;
- height:500px; 
+ height:500px;
 }
-
+#v1{
+  width:500px;
+  height:500px;
+  float: right;
+}
 #qr-canvas {
   display: none;
 }
@@ -15,7 +19,7 @@
   color:#999;
   margin-top:5px;
   margin-bottom:10px;
-  
+
 }
 
 .inthemiddle {
