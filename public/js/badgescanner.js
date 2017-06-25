@@ -19,12 +19,12 @@ var success = function(stream) {
 };
 
 
-function myFunction(){
-  var v1 = document.getElementById("v1");
-  v1.src = "../media/1.mp4";
+//function myFunction(){
+  //var v1 = document.getElementById("v1");
+//  v1.src = "";
 //document.getElementById("1.mp4").src="../media/1.mp4";
 //document.getElementById("v1").load();
-}
+//}
 
 
 
@@ -96,7 +96,10 @@ var play = function(data){
 }
 
 }*/
-
+//var videoElement = document.getElementById('v1');
+    //videoElement.pause();
+    //videoElement.src =""; // empty source
+   //videoElement.load();
 
 var renderTable = function() {
   var fn = function(doc) {
@@ -104,6 +107,7 @@ var renderTable = function() {
       emit(doc.ts,null);
     }
   };
+  document.getElementById("v1").removeAttribute('src');
   db.query("query/byts", {descending:true, include_docs:true} ).then(function (result) {
     if(result.rows.length>0) {
       var html = '<table class="primary">';
@@ -127,8 +131,34 @@ var renderTable = function() {
           html += '<td>' + d.tel + '</td>';
           html += '<td>' + d.email + '</td>';
           html += '<td>' + d.url + '</td>';
-        //  var data = d.url;
-          //document.getElementById("v1").src= "data";
+
+          //document.getElementById("v1").src="";
+
+
+         var data = d.url;
+
+         var vdo = document.getElementById("v1");
+        // if(data==='../media/1.mp4'){
+           vdo.src=data;
+         //}
+         //else if (data==='../media/2.mp4') {
+           //document.getElementById("v22").src="../media/2.mp4";
+         //}
+         //else {
+           //document.getElementById("v33").src="../media/3.mp4";
+         //}
+
+         //var val = document.getElementById("v1");
+         //val.removeAttribute('src');
+         //val.load();
+
+         //document.getElementById("v1").load();
+
+         //document.getElementById("v1").load();
+          //document.getElementById("v1").src= data;
+          //data = null;
+          //document.getElementById("v22").src=data;
+          //document.getElementById("v33").src=date;
           //document.getElementById(v.src=../media/1.mp4)
           //document.getElementById("v1").src="../media/1.mp4";
           html += '<td><label for="modal_2" class="button notebutton" data-id="' + d._id + '" data-rev="' + d._rev + '">Note</label></td>';
@@ -144,7 +174,14 @@ var renderTable = function() {
       html += '</tbody></table>';
     } else {
       html = "";
+      vdo.src="";
     }
+
+    //var videoElement = document.getElementById('v1');
+      //  videoElement.pause();
+        //videoElement.src =""; // empty source
+       //videoElement.load();
+
     document.getElementById("thetable").innerHTML=html;
 
 
